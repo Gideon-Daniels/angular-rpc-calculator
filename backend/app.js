@@ -2,18 +2,15 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const jayson = require("jayson");
-
 const app = express();
 
+const CalculatorService = require("./services/calculator.js");
+const calculator = new CalculatorService();
 // enable cors for all routes
 app.use(cors());
 
 // create new jayson server
-const server = jayson.server({
-  add: function (args, callback) {
-    callback(null, args[0] + args[1]);
-  },
-});
+const server = jayson.server(calculator, undefined);
 
 // Automatically parse request bodies
 app.use(bodyParser.json());
