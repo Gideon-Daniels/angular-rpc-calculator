@@ -19,4 +19,15 @@ export class CalculatorService {
 
     return this.http.post('http://localhost:3000', body);
   }
+
+  calculate(method: string, params: any[]): Observable<any> {
+    const body = {
+      jsonrpc: '2.0',
+      method: method,
+      params: params,
+      id: 1,
+    };
+
+    return this.http.post('http://localhost:3000', body);
+  }
 }

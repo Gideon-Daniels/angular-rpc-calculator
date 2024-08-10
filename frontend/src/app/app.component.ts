@@ -12,13 +12,17 @@ import { CalculatorService } from './calculator.service';
 export class AppComponent {
   title = 'calculator';
   result = '';
+  inputOne = 5;
+  inputTwo = 5;
 
   constructor(private calculatorService: CalculatorService) {}
 
-  addNumbers() {
-    this.calculatorService.add('add', [1, 2]).subscribe((data) => {
-      console.log(data);
-      this.result = data.result;
-    });
+  onCalculate(action: string) {
+    this.calculatorService
+      .calculate(action, [this.inputOne, this.inputTwo])
+      .subscribe((data) => {
+        console.log(data);
+        this.result = data.result;
+      });
   }
 }
