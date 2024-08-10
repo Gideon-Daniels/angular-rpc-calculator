@@ -1,6 +1,11 @@
-<button (click)="onCalculate('add')">Add</button>
-<button (click)="onCalculate('subtract')">subtract</button>
-<button (click)="onCalculate('divide')">divide</button>
-<button (click)="onCalculate('multiply')">multiply</button>
+<div class="container">
+  <h1 class="display">{{ display }}</h1>
+  <button class="number" (click)="onNumber(number)" *ngFor="let number of numbers">{{ number }}</button>
+</div>
+
+<button (click)="setOperation(operation.name, operation.symbol)"
+        *ngFor="let operation of operations">{{ operation.symbol }}
+</button>
+<button (click)="onCalculate()">=</button>
 
 <h3>Result: {{ result }}</h3>
