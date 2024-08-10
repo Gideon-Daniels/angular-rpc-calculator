@@ -13,7 +13,7 @@ import { NgForOf } from '@angular/common';
 })
 export class AppComponent {
   title = 'calculator';
-  numbers: number[] = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+  numbers: number[] = [1, 2, 3, 4, 5, 6, 7, 8, 9];
   operations: {
     name: string;
     symbol: string;
@@ -41,6 +41,10 @@ export class AppComponent {
         name: 'divide',
         symbol: '/',
       },
+      {
+        name: 'clear',
+        symbol: 'C',
+      },
     ];
   }
 
@@ -56,6 +60,7 @@ export class AppComponent {
   }
 
   setOperation(operation: string, display: string) {
+    if (operation === 'clear') return this.reset();
     if (this.inputs.length >= 2) {
       return alert('only two inputs is allowed');
     }

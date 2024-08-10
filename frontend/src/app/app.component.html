@@ -1,11 +1,32 @@
-<div class="container">
-  <h1 class="display">{{ display }}</h1>
-  <button class="number" (click)="onNumber(number)" *ngFor="let number of numbers">{{ number }}</button>
+<div class="calculator">
+  <div class="main-container">
+    <div class="top">
+
+      <div class="display-result">
+        <h1>{{ result }}</h1>
+      </div>
+
+      <div class="display-inputs">
+        <h3 class="display">{{ display }}</h3>
+      </div>
+
+    </div>
+
+    <div class="bottom">
+      <div class="container-numbers">
+        <button class="number" (click)="onNumber(number)" *ngFor="let number of numbers.reverse()">{{ number }}</button>
+      </div>
+
+      <div class="container-operations">
+        <button class="operation" (click)="setOperation(operation.name, operation.symbol)"
+                *ngFor="let operation of operations">{{ operation.symbol }}
+        </button>
+        <button class="operation" (click)="onCalculate()">=</button>
+      </div>
+    </div>
+  </div>
+
 </div>
 
-<button (click)="setOperation(operation.name, operation.symbol)"
-        *ngFor="let operation of operations">{{ operation.symbol }}
-</button>
-<button (click)="onCalculate()">=</button>
 
-<h3>Result: {{ result }}</h3>
+
