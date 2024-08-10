@@ -1,0 +1,21 @@
+{
+  "name": "angular-rpc-calculator",
+  "version": "1.0.0",
+  "description": "This is a fullstack app that introduces rpc with angular",
+  "main": "index.js",
+  "scripts": {
+    "server": "cd backend && node app.js && cd ..",
+    "client": "cd frontend && ng serve && cd ..",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Gideon-Daniels/angular-rpc-calculator.git"
+  },
+  "author": "Gideon",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Gideon-Daniels/angular-rpc-calculator/issues"
+  },
+  "homepage": "https://github.com/Gideon-Daniels/angular-rpc-calculator#readme"
+}
