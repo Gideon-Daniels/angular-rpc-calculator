@@ -3,6 +3,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
+// todo : handle errors
+
 @Injectable({
   providedIn: 'root',
 })

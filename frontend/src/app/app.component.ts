@@ -4,6 +4,9 @@ import { CalculatorService } from './calculator.service';
 import { FormsModule } from '@angular/forms';
 import { NgForOf } from '@angular/common';
 
+//todo: handle errors
+//todo: setup unit and integration tests
+
 @Component({
   selector: 'app-root',
   standalone: true,
