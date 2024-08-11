@@ -3,7 +3,6 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 const jayson = require("jayson");
 const app = express();
-module.exports = app;
 
 const CalculatorService = require("./services/calculator.js");
 const calculator = new CalculatorService();
@@ -19,9 +18,16 @@ app.use(bodyParser.json());
 // setup jayson middleware at specific endpoint
 app.post("/calculator", server.middleware());
 
-const port = 3000;
+module.exports = function startServer() {
+  const port = 3000;
+  // start the server
+  const server = app.listen(port, () => {
+    console.log(`Server is running on port ${port}`);
+  });
 
-// start the server
-app.listen(port, () => {
-  console.log(`Server is running on port ${port}`);
-});
+  server.on("close", () => {
+    console.log("Server closed");
+  });
+
+  return server;
+};

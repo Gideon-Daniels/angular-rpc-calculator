@@ -2,14 +2,17 @@ const chai = require("chai");
 const expect = chai.expect;
 const request = require("supertest");
 
-const Calculator = require("../services/calculator");
-// todo-calulator-tests: add test case for negative numbers
-// todo-calulator-tests: add test case for undefined
-// todo-calulator-tests: add test case for floating points
+const startServer = require("../app");
 
 describe("Calculator", () => {
   let req;
   let body;
+  let server;
+
+  before(() => {
+    server = startServer();
+  });
+
   beforeEach(() => {
     body = {
       jsonrpc: "2.0",
@@ -17,10 +20,14 @@ describe("Calculator", () => {
       params: [],
       id: 1,
     };
-    req = request(require("../app")).post("/calculator");
+    req = request(server).post("/calculator");
   });
 
-  context("adding", function () {
+  after(() => {
+    server.close();
+  });
+
+  context("adding", () => {
     it("should add two numbers", () => {
       body.params = [1, "+", 2];
 
@@ -46,7 +53,7 @@ describe("Calculator", () => {
     });
   });
 
-  context("subtracting", function () {
+  context("subtracting", () => {
     it("should subtract two numbers", () => {
       body.params = [2, "-", 1];
 
@@ -59,7 +66,7 @@ describe("Calculator", () => {
         });
     });
 
-    it("should subtract with negative number greater then 1", () => {
+    it("should subtract with negative numbers", () => {
       body.params = [1, "-", 3];
 
       req
@@ -68,6 +75,18 @@ describe("Calculator", () => {
         .end((err, response) => {
           expect(response.status).to.equal(200);
           expect(response.body).to.eql({ jsonrpc: "2.0", id: 1, result: -2 });
+        });
+    });
+
+    it("should subtract with more then one negative number", () => {
+      body.params = [1, "-", 2, "-", 3, "-", 4];
+
+      req
+        .send(body)
+        .set("Accept", "application/json")
+        .end((err, response) => {
+          expect(response.status).to.equal(200);
+          expect(response.body).to.eql({ jsonrpc: "2.0", id: 1, result: -8 });
         });
     });
 
@@ -110,7 +129,7 @@ describe("Calculator", () => {
     });
   });
 
-  context("multiply", function () {
+  context("multiply", () => {
     it("should multiply two numbers", () => {
       body.params = [1, "*", 2];
 
