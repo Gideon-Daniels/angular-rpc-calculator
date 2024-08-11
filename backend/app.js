@@ -18,8 +18,7 @@ app.use(bodyParser.json());
 // setup jayson middleware at specific endpoint
 app.post("/calculator", server.middleware());
 
-module.exports = function startServer() {
-  const port = 3000;
+module.exports = function startServer(port) {
   // start the server
   const server = app.listen(port, () => {
     console.log(`Server is running on port ${port}`);

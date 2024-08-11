@@ -10,7 +10,7 @@ describe("Calculator", () => {
   let server;
 
   before(() => {
-    server = startServer();
+    server = startServer(2000);
   });
 
   beforeEach(() => {

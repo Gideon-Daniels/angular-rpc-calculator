@@ -4,7 +4,7 @@
   "description": "This is a fullstack app that introduces rpc with angular",
   "main": "index.js",
   "scripts": {
-    "server": "cd backend && node app.js && cd ..",
+    "server": "cd backend && node index.js && cd ..",
     "client": "cd frontend && ng serve && cd ..",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
