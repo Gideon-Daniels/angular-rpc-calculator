@@ -3,6 +3,7 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 const jayson = require("jayson");
 const app = express();
+module.exports = app;
 
 const CalculatorService = require("./services/calculator.js");
 const calculator = new CalculatorService();
@@ -15,8 +16,8 @@ const server = jayson.server(calculator, undefined);
 // Automatically parse request bodies
 app.use(bodyParser.json());
 
-// setup jayson middleware
-app.use(server.middleware());
+// setup jayson middleware at specific endpoint
+app.post("/calculator", server.middleware());
 
 const port = 3000;
 
