@@ -7,27 +7,18 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class CalculatorService {
+  counter = 0;
+
   constructor(private http: HttpClient) {}
 
-  add(method: string, params: any[]): Observable<any> {
+  calculate(params: string[]): Observable<any> {
     const body = {
       jsonrpc: '2.0',
-      method: method,
+      method: 'calculate',
       params: params,
-      id: 1,
+      id: this.counter,
     };
-
-    return this.http.post('http://localhost:3000', body);
-  }
-
-  calculate(method: string, params: any[]): Observable<any> {
-    const body = {
-      jsonrpc: '2.0',
-      method: method,
-      params: params,
-      id: 1,
-    };
-
-    return this.http.post('http://localhost:3000', body);
+    this.counter++;
+    return this.http.post('http://localhost:3000/calculator', body);
   }
 }

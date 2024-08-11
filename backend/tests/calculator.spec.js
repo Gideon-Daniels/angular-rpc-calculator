@@ -28,13 +28,29 @@ describe("Calculator", () => {
   });
 
   context("adding", () => {
-    it("should add two numbers", () => {
-      body.params = [1, "+", 2];
+    it("should add two numbers that where one of them is not a number", () => {
+      body.params = ["+", "+", "1"];
 
       req
         .send(body)
         .set("Accept", "application/json")
-        .end((err, response) => {
+        .then((response) => {
+          expect(response.status).to.equal(200);
+          expect(response.body).to.eql({
+            jsonrpc: "2.0",
+            id: 1,
+            result: "NaN",
+          });
+        });
+    });
+
+    it("should add two numbers", () => {
+      body.params = ["1", "+", "2"];
+
+      req
+        .send(body)
+        .set("Accept", "application/json")
+        .then((response) => {
           expect(response.status).to.equal(200);
           expect(response.body).to.eql({ jsonrpc: "2.0", id: 1, result: 3 });
         });
@@ -46,7 +62,7 @@ describe("Calculator", () => {
       req
         .send(body)
         .set("Accept", "application/json")
-        .end((err, response) => {
+        .then((response) => {
           expect(response.status).to.equal(200);
           expect(response.body).to.eql({ jsonrpc: "2.0", id: 1, result: 15 });
         });
@@ -60,7 +76,7 @@ describe("Calculator", () => {
       req
         .send(body)
         .set("Accept", "application/json")
-        .end((err, response) => {
+        .then((response) => {
           expect(response.status).to.equal(200);
           expect(response.body).to.eql({ jsonrpc: "2.0", id: 1, result: 1 });
         });
@@ -72,7 +88,7 @@ describe("Calculator", () => {
       req
         .send(body)
         .set("Accept", "application/json")
-        .end((err, response) => {
+        .then((response) => {
           expect(response.status).to.equal(200);
           expect(response.body).to.eql({ jsonrpc: "2.0", id: 1, result: -2 });
         });
@@ -84,7 +100,7 @@ describe("Calculator", () => {
       req
         .send(body)
         .set("Accept", "application/json")
-        .end((err, response) => {
+        .then((response) => {
           expect(response.status).to.equal(200);
           expect(response.body).to.eql({ jsonrpc: "2.0", id: 1, result: -8 });
         });
@@ -96,7 +112,7 @@ describe("Calculator", () => {
       req
         .send(body)
         .set("Accept", "application/json")
-        .end((err, response) => {
+        .then((response) => {
           expect(response.status).to.equal(200);
           expect(response.body).to.eql({ jsonrpc: "2.0", id: 1, result: 0 });
         });
@@ -110,7 +126,7 @@ describe("Calculator", () => {
       req
         .send(body)
         .set("Accept", "application/json")
-        .end((err, response) => {
+        .then((response) => {
           expect(response.status).to.equal(200);
           expect(response.body).to.eql({ jsonrpc: "2.0", id: 1, result: 0.5 });
         });
@@ -122,7 +138,7 @@ describe("Calculator", () => {
       req
         .send(body)
         .set("Accept", "application/json")
-        .end((err, response) => {
+        .then((response) => {
           expect(response.status).to.equal(200);
           expect(response.body).to.eql({ jsonrpc: "2.0", id: 1, result: 1 });
         });
@@ -131,24 +147,24 @@ describe("Calculator", () => {
 
   context("multiply", () => {
     it("should multiply two numbers", () => {
-      body.params = [1, "*", 2];
+      body.params = [1, "x", 2];
 
       req
         .send(body)
         .set("Accept", "application/json")
-        .end((err, response) => {
+        .then((response) => {
           expect(response.status).to.equal(200);
           expect(response.body).to.eql({ jsonrpc: "2.0", id: 1, result: 2 });
         });
     });
 
     it("should multiply more then two numbers", () => {
-      body.params = [10, "*", 5, "*", 2, "*", 1];
+      body.params = [10, "x", 5, "x", 2, "x", 1];
 
       req
         .send(body)
         .set("Accept", "application/json")
-        .end((err, response) => {
+        .then((response) => {
           expect(response.status).to.equal(200);
           expect(response.body).to.eql({ jsonrpc: "2.0", id: 1, result: 100 });
         });

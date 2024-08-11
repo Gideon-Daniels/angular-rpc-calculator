@@ -13,15 +13,13 @@ import { NgForOf } from '@angular/common';
 })
 export class AppComponent {
   title = 'calculator';
-  numbers: number[] = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+  numbers: number[] = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9].reverse();
   operations: {
     name: string;
     symbol: string;
   }[];
-  inputs: number[] = [];
   result = '';
   display = '0';
-  operation = '';
 
   constructor(private calculatorService: CalculatorService) {
     this.operations = [
@@ -31,7 +29,7 @@ export class AppComponent {
       },
       {
         name: 'multiply',
-        symbol: 'x',
+        symbol: '*',
       },
       {
         name: 'subtract',
@@ -49,36 +47,37 @@ export class AppComponent {
   }
 
   onCalculate() {
-    this.calculatorService
-      .calculate(this.operation, this.inputs)
-      .subscribe((data) => {
-        console.log(data);
-        this.result = data.result;
-      });
+    const inputs = this.convertToInputs(this.display);
+    this.calculatorService.calculate(inputs).subscribe((data) => {
+      console.log(data);
+      this.result = data.result;
+    });
 
     this.reset();
   }
 
-  setOperation(operation: string, display: string) {
+  convertToInputs(display: string) {
+    const formatDisplay = display.trim();
+    const inputs = formatDisplay.split(/(\+|\-|\*|\/)/);
+    console.log(inputs);
+    return inputs;
+  }
+
+  setOperation(operation: string, symbol: string) {
     if (operation === 'clear') return this.reset();
-    if (this.inputs.length >= 2) {
-      return alert('only two inputs is allowed');
-    }
-    this.display += `${display} `;
-    this.operation = operation;
+
+    this.display += ` ${symbol} `;
   }
 
   onNumber(number: number) {
     if (this.display === '0') {
       this.display = '';
     }
-    this.display += `${number} `;
-    this.inputs.push(number);
+    this.display += `${number}`;
   }
 
   reset() {
-    this.inputs = [];
     this.display = '0';
-    this.operation = '';
+    this.result = '';
   }
 }

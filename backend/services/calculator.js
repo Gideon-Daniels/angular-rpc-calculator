@@ -13,8 +13,13 @@ module.exports = class CalculatorService {
       return callback(null, this.result);
     }
 
+    if (isNaN(Number(expression[0])) || isNaN(Number(expression[2]))) {
+      this.result = "NaN";
+      return callback(null, this.result);
+    }
+
     const operator = expression[1];
-    const numbers = [expression[0], expression[2]];
+    const numbers = [Number(expression[0]), Number(expression[2])];
 
     if (operator === "+") {
       this.result = this.add(numbers);
