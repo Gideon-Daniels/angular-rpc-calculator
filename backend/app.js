@@ -7,18 +7,42 @@ const jayson = require("jayson");
 const app = express();
 
 const CalculatorService = require("./services/calculator.js");
-const calculator = new CalculatorService();
+
+// create new jayson server
+const server = jayson.Server(
+  {
+    calculate: new CalculatorService().calculate,
+  },
+  undefined,
+);
+// Automatically parse request bodies
+app.use(bodyParser.json());
 // enable cors for all routes
 app.use(cors());
 
-// create new jayson server
-const server = jayson.server(calculator, undefined);
-
-// Automatically parse request bodies
-app.use(bodyParser.json());
-
 // setup jayson middleware at specific endpoint
-app.post("/calculator", server.middleware());
+// app.post("/calculator", server.middleware());
+
+app.use((req, res, next) => {
+  const request = req.body;
+  server.call(request, (err, response) => {
+    if (err) {
+      // if err is an Error, err is NOT a json-rpc error
+      if (err instanceof Error) return next(err);
+      // <- deal with json-rpc errors here, typically caused by the user
+      res.status(400);
+      return res.send(err);
+    }
+    // <- here we can mutate the response, set response headers, etc
+    if (response) {
+      res.send(response);
+    } else {
+      // empty response (could be a notification)
+      res.status(204);
+      res.send("");
+    }
+  });
+});
 
 module.exports = function startServer(port) {
   // start the server
