@@ -3,7 +3,7 @@ const expect = chai.expect;
 const request = require("supertest");
 
 const startServer = require("../app");
-
+// todo: add more tests case for NaN  error handling
 describe("Calculator", () => {
   let body;
   let server;
@@ -33,12 +33,12 @@ describe("Calculator", () => {
       .send(body)
       .set("Accept", "application/json");
 
+    expect(response.status).to.equal(200);
     expect(response.headers["content-type"]).match(/json/);
     expect(response.body).to.eql({
       jsonrpc: "2.0",
       id: 1,
       result: "4",
     });
-    expect(response.status).to.equal(200);
   });
 });

@@ -11,8 +11,8 @@ module.exports = class CalculatorService {
     };
   }
 
-  calculate(params, callback) {
-    if (!Array.isArray(params) || typeof params[0] !== "string") {
+  async calculate(params) {
+    if (typeof params[0] !== "string") {
       throw new Error("Invalid params. Expected an array with a string.");
     }
     this.convertExpression(params[0]);
@@ -20,7 +20,7 @@ module.exports = class CalculatorService {
     this.BODMASOperation();
     this.result = this.expression[0];
 
-    return callback(null, this.result);
+    return this.result;
   }
 
   convertExpression(expression) {
@@ -44,10 +44,6 @@ module.exports = class CalculatorService {
   }
 
   resolveExpression(index, operator) {
-    // if (isNaN(Number(expression[0])) || isNaN(Number(expression[2]))) {
-    //   this.result = "NaN";
-    //   return callback(null, this.result);
-    // }
     let func = new Function("a", "b", `return a ${operator} b;`); // replaced with eval() since eval introduces security risks
     let result = func(
       Number(this.expression[index - 1]),
