@@ -13,14 +13,14 @@ export class CalculatorService {
 
   constructor(private http: HttpClient) {}
 
-  calculate(params: string[]): Observable<any> {
+  calculate(params: string): Observable<any> {
     const body = {
       jsonrpc: '2.0',
       method: 'calculate',
-      params: params,
+      params: [params],
       id: this.counter,
     };
     this.counter++;
-    return this.http.post('http://localhost:3000/calculator', body);
+    return this.http.post('http://localhost:3000', body);
   }
 }

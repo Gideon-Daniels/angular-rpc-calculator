@@ -50,20 +50,12 @@ export class AppComponent {
   }
 
   onCalculate() {
-    const inputs = this.convertToInputs(this.display);
-    this.calculatorService.calculate(inputs).subscribe((data) => {
+    this.calculatorService.calculate(this.display).subscribe((data) => {
       console.log(data);
       this.result = data.result;
     });
 
     this.reset();
-  }
-
-  convertToInputs(display: string) {
-    const formatDisplay = display.trim();
-    const inputs = formatDisplay.split(/(\+|\-|\*|\/)/);
-    console.log(inputs);
-    return inputs;
   }
 
   setOperation(operation: string, symbol: string) {
