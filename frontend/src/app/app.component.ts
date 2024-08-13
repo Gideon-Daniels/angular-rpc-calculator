@@ -50,7 +50,7 @@ export class AppComponent {
   }
 
   onCalculate() {
-    this.calculatorService.calculate(this.display).subscribe((data) => {
+    this.calculatorService.calculate(this.display.trim()).subscribe((data) => {
       console.log(data);
       this.result = data.result;
     });

@@ -1,13 +1,13 @@
 //todo: handle errors
 
-const express = require("express");
-const bodyParser = require("body-parser");
-const cors = require("cors");
-const jayson = require("jayson/promise");
+import express from "express";
+import bodyParser from "body-parser";
+import cors from "cors";
+import jayson from "jayson/promise";
+
+import { CalculatorService } from "./services/calculator";
 
 const app = express();
-
-const CalculatorService = require("./services/calculator.js");
 
 // create new jayson server
 const server = new jayson.Server(
@@ -45,7 +45,7 @@ app.post("/", server.middleware());
 //   });
 // });
 
-module.exports = function startServer(port) {
+export function startServer(port: number) {
   // start the server
   const server = app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
@@ -56,4 +56,4 @@ module.exports = function startServer(port) {
   });
 
   return server;
-};
+}
